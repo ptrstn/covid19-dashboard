@@ -35,7 +35,7 @@
 
 <body class="">
 
-  {% include "includes/sidenav.html" %}
+{#  {% include "includes/sidenav.html" %}#}
 
   <div class="main-content">
 
@@ -43,9 +43,10 @@
 
   </div>
 
-  {% include "includes/scripts.html" %}
+  <script src="/static/assets/js/plugins/jquery/dist/jquery.min.js"></script>
+  <script src="/static/assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/assets/js/argon-dashboard.min.js?v=1.1.0"></script>
 
-  <!-- Specific JS goes HERE --> 
   {% block javascripts %}{% endblock javascripts %}
 
 </body>
