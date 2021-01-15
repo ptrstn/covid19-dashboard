@@ -1,5 +1,3 @@
-# ©Brian Ruiz, @brianruizy
-# Created: 03-15-2020
 import datetime
 import platform
 
@@ -11,13 +9,7 @@ import pandas as pd
 # ³ New York Times: https://github.com/nytimes/covid-19-data
 
 # Different styles in zero-padding in date depend on operating systems
-if platform.system() == 'Linux':
-    STRFTIME_DATA_FRAME_FORMAT = '%-m/%-d/%y'
-elif platform.system() == 'Windows':
-    STRFTIME_DATA_FRAME_FORMAT = '%#m/%#d/%y'
-else:
-    STRFTIME_DATA_FRAME_FORMAT = '%-m/%-d/%y'
-
+STRFTIME_DATA_FRAME_FORMAT = '%#m/%#d/%y' if platform.system() == 'Windows' else '%-m/%-d/%y'
 
 def daily_report(date_string=None):
     # Reports aggegrade data, dating as far back to 01-22-2020

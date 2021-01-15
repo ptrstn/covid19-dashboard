@@ -122,10 +122,10 @@ function load_world_map() {
                     colorbar: {
                         outlinewidth: 0,
                         title: {
-                            text: "Confirmed"
+                            text: "Cases"
                         }
                     },
-                    colorscale: [[0, "hsl(255, 95%, 26%)"], [0.5, "hsl(330, 60%, 50%)"], [1, "hsl(60, 100%, 60%)"]],
+                    colorscale: [[0, "green"], [0.5, "yellow"], [1, "red"]],
                     showscale: true,
                     size: Object.values(data["Confirmed"]),
                     sizemin: 0,
@@ -206,14 +206,14 @@ function load_realtime_growth_chart() {
                 x: dates,
                 y: Object.values(data["Confirmed"]),
                 name: "Confirmed",
-                line: {color: "#8965E0", width: 4}
+                line: {color: "orange", width: 4}
             };
 
             var recovered_trace = {
                 x: dates,
                 y: Object.values(data["Recovered"]),
                 name: "Recovered",
-                line: {color: "#2DCE89", width: 4}
+                line: {color: "green", width: 4}
             };
 
             var deaths_trace = {
@@ -221,7 +221,7 @@ function load_realtime_growth_chart() {
                 y: Object.values(data["Deaths"]),
                 name: "Deaths",
                 line: {
-                    color: "#F9345E",
+                    color: "red",
                     width: 4
                 }
             };
@@ -234,23 +234,10 @@ function load_realtime_growth_chart() {
                 yaxis: {automargin: true, type: "log", gridcolor: "#32325d"},
                 xaxis: {automargin: true, showgrid: false},
                 showlegend: false,
-                font: {color: '#ced4da'},
+                font: {color: 'white'},
                 margin: {t:0, l:0, r:0, b:0},
                 hovermode: "closest",
-                updatemenus: [
-                    {
-                        visible: true,
-                        type: "dropdown",
-                        buttons: [
-                            {method: "relayout", label: "Logarithmic", args: [{"yaxis.type": "log"}]},
-                            {method: "relayout", label: "Linear", args: [{"yaxis.type": "linear"}]}
-                        ],
-                        x: 0.05,
-                        xanchor: "auto",
-                        bgcolor: "#6236FF",
-                        bordercolor: "rgba(0,0,0,0)"
-                    }
-                ]
+
             };
 
             var plot_config = {responsive: true, displayModeBar: false};
@@ -283,23 +270,23 @@ function load_daily_growth_chart() {
                     name: "Confirmed",
                     type: "bar",
                     visible: "legendonly",
-                    marker: {color: "#6236FF", line: {color: "#fff", width: 1}}
+                    marker: {color: "Orange", line: {color: "#fff", width: 1}}
                 },
                 {
                     x: dates,
                     y: deaths,
                     name: "Deaths",
                     type: "bar",
-                    marker: {color: "#F9345E", line: {color: "#FFF", width: 1}}
+                    marker: {color: "Red", line: {color: "#FFF", width: 1}}
                 }
             ];
 
             var selectorOptions = {
                 buttons: [
-                    {count: 7, label: "W", step: "day", stepmode: "backward"},
-                    {count: 1, label: "M", step: "month", stepmode: "backward"},
-                    {count: 3, label: "3M", step: "month", stepmode: "backward"},
-                    {label: "T", step: "all"}
+                    {count: 7, label: "Week", step: "day", stepmode: "backward"},
+                    {count: 1, label: "Month", step: "month", stepmode: "backward"},
+                    {count: 3, label: "3 Month", step: "month", stepmode: "backward"},
+                    {label: "Total", step: "all"}
                 ]
             };
 
@@ -310,8 +297,8 @@ function load_daily_growth_chart() {
                 margin: {t:0, l:0, r:0, b:0},
                 hovermode: "closest",
                 bargap: 0,
-                yaxis: {automargin: true, showgrid: true, zerolinecolor: "#FFFFFF", gridcolor: "#e9ecef"},
-                xaxis: {automargin: true, showgrid: false, rangeselector: selectorOptions},
+                yaxis: {automargin: true, showgrid: true, zerolinecolor: "#FFFFFF", gridcolor: "#e9ecef", fixedrange: true},
+                xaxis: {automargin: true, showgrid: false, rangeselector: selectorOptions, fixedrange: true},
                 legend: {x: 0.025, y: 1}
             };
 

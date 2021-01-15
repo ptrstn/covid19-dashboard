@@ -9,6 +9,16 @@
 
 {% block content %}
 
+    <!-- Image and text -->
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="https://www.technikum-wien.at/sites/default/files/logo-300x160.png" alt=""  height="70" class="d-inline-block align-top">
+                <span class="display-2">Data Ethics & Open Data - COVID-19 Dashboard</span>
+            </a>
+        </div>
+    </nav>
+
     {% include "includes/header.html" %}
 
     <div class="container mt--7 bg-secondary">
@@ -68,7 +78,7 @@
                         <div class="row align-items-center">
                             <div class="col">
                                 {#                  <h6 class="text-uppercase text-light ls-1 mb-1">Global | Cumulative</h6>#}
-                                <h2 class="text-white mb-0">Growth</h2>
+                                <h2 class="text-white mb-0">Growth of total number of cases</h2>
                             </div>
                             {#                <div class="col text-right">#}
                             {#                  <a class="btn btn-sm btn-light" tabindex="0" role="button" data-toggle="popover" data-trigger="focus" title="Info"#}
@@ -91,8 +101,8 @@
                     <div class="card-header bg-transparent">
                         <div class="row align-items-center">
                             <div class="col">
-                                {#                  <h6 class="text-uppercase text-muted ls-1 mb-1">Global | Daily</h6>#}
-                                <h2 class="mb-0">Number of Covid-19 cases over time</h2>
+                                {#            a      <h6 class="text-uppercase text-muted ls-1 mb-1">Global | Daily</h6>#}
+                                <h2 class="mb-0">New COVID-19 cases per day</h2>
                             </div>
                             {#                <div class="col text-right">#}
                             {#                  <a class="btn btn-sm btn-white" tabindex="0" role="button" data-toggle="popover" data-trigger="focus" title="Info"#}
