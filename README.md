@@ -1,16 +1,36 @@
-# Covid 19 Interactive Dashboard
+# Open Data & Data Ethics - Covid-19 Dashboard
 
-Covid-19 Dashboard
+## How to run
 
-## Data Sources
+```cd``` into the project directory and run:
 
-* Johns Hopkins University: [CSSE](https://systems.jhu.edu/) 2019-ncov data repository, found [here](https://github.com/CSSEGISandData/COVID-19).
-* Our World in Data: [OWID](https://ourworldindata.org/) GitHub Data repository, found [here](https://github.com/owid/covid-19-data/tree/master/public/data).
-* New York Times' COVID GitHub data repository, found [here](https://github.com/nytimes/covid-19-data)
+```bash
+docker build -f Dockerfile .
+```
+
+and then run:
+
+```bash
+docker-compose up
+```
+
+And navigate to http://0.0.0.0:8000/.
+
+See also:
+- https://docs.docker.com/compose/django/
+
+## Troubleshooting
+
+If you get the message ```DisallowedHost at /``` or similar then add your domain to ```core/settings.py```:
+
+```python
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.technikum-wien.at', 'your-new-domain']
+```
 
 ## Credits
 
 - Bootstrap https://getbootstrap.com/
+- Bootstrap Admin  
 - Python https://www.python.org/
 - Django https://www.djangoproject.com/
 - Plotly https://plotly.com/python/

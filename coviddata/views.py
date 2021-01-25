@@ -1,20 +1,19 @@
-from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, redirect, render
-from django.template import loader
-
 import json
+
+from django.http import HttpResponse
+from django.shortcuts import render
 
 from . import getdata, maps
 
 
-def index(request): 
+def index(request):
     return render(request, template_name='index.html')
 
 
 def report(request):
     df = getdata.daily_report(date_string=None)
     df = df[['Confirmed', 'Deaths', 'Recovered']].sum()
-    death_rate = f'{(df.Deaths / df.Confirmed)*100:.02f}%'
+    death_rate = f'{(df.Deaths / df.Confirmed) * 100:.02f}%'
 
     data = {
         'num_confirmed': int(df.Confirmed),
@@ -71,9 +70,9 @@ def daily_growth(request):
     df_deaths = df_deaths.set_index('date')
 
     json_string = '{' + \
-        '"confirmed": ' + df_confirmed.to_json(orient='columns') + ',' + \
-        '"deaths": ' + df_deaths.to_json(orient='columns') + \
-    '}'
+                  '"confirmed": ' + df_confirmed.to_json(orient='columns') + ',' + \
+                  '"deaths": ' + df_deaths.to_json(orient='columns') + \
+                  '}'
 
     return HttpResponse(json_string, content_type='application/json')
 
@@ -83,8 +82,3 @@ def daily_report(request):
     columns = ['Lat', 'Long_', 'Confirmed', 'Combined_Key']
     df = df[columns]
     return HttpResponse(df.to_json(orient='columns'), content_type='application/json')
-
-
-# def mapspage(request):
-#     plot_div = maps.usa_map()
-#     return render(request, template_name='pages/maps.html', context={'usa_map': plot_div})

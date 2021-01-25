@@ -125,7 +125,7 @@ function load_world_map() {
                             text: "Cases"
                         }
                     },
-                    colorscale: [[0, "green"], [0.5, "yellow"], [1, "red"]],
+                    colorscale: [[0, "DeepPink"], [0.5, "BlueViolet"], [1, "DodgerBlue"]],
                     showscale: true,
                     size: Object.values(data["Confirmed"]),
                     sizemin: 0,
@@ -205,7 +205,7 @@ function load_realtime_growth_chart() {
             var confirmed_trace = {
                 x: dates,
                 y: Object.values(data["Confirmed"]),
-                name: "Confirmed",
+                name: "Cases",
                 line: {color: "orange", width: 4}
             };
 
@@ -267,7 +267,7 @@ function load_daily_growth_chart() {
                 {
                     x: dates,
                     y: confirmed,
-                    name: "Confirmed",
+                    name: "Cases",
                     type: "bar",
                     visible: "legendonly",
                     marker: {color: "Orange", line: {color: "#fff", width: 1}}

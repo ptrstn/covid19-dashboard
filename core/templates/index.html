@@ -1,51 +1,166 @@
-{% extends 'layouts/base.html' %}
+{% load static %}
 {% load humanize %}
+{% load trend %}
 
+<!DOCTYPE html>
+<html lang="en">
 
-{% block title %} Home {% endblock title %}
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<!-- Specific CSS goes HERE -->
-{% block stylesheets %}{% endblock stylesheets %}
+    <title>
+        COVID-19 Dashboard - UAS Technikum Vienna
+    </title>
 
-{% block content %}
+    <!-- Favicon - loaded as static -->
+    <link rel="icon" href="{% static 'assets/img/brand/favicon.ico' %}" type="image/png" media="print"
+          onload="this.media='all'"/>
+    <noscript>
+        <link rel="icon" href="{% static 'assets/img/brand/favicon.ico' %}" type="image/png"/>
+    </noscript>
 
-    <!-- Image and text -->
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap"
+          media="print" onload="this.media='all'"/>
+    <noscript>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap"/>
+    </noscript>
+
+    <!-- Icons -->
+    <script defer src="https://kit.fontawesome.com/189832a678.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="/static/assets/css/style.css?v=1.1.0" media="print" onload="this.media='all'"/>
+    <noscript>
+        <link rel="stylesheet" href="/static/assets/css/style.css?v=1.1.0"/>
+    </noscript>
+</head>
+
+<body class="">
+
+<div class="main-content">
+
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
-                <img src="https://www.technikum-wien.at/sites/default/files/logo-300x160.png" alt=""  height="70" class="d-inline-block align-top">
+                <img src="https://www.technikum-wien.at/sites/default/files/logo-300x160.png" alt="" height="70"
+                     class="d-inline-block align-top">
                 <span class="display-2">Data Ethics & Open Data - COVID-19 Dashboard</span>
             </a>
         </div>
     </nav>
 
-    {% include "includes/header.html" %}
+    <div class="header pb-8 pt-5 pt-md-6 bg-secondary">
+        <div class="container-fluid">
+            <div class="header-body">
+                <!-- Card stats -->
+                <div class="row">
+                    <div class="col-xl-3 col-lg-6">
+                        <div class="card shadow card-stats mb-4 mb-xl-0 fade-in-top">
+                            <div class="card-body ">
+                                <div class="row">
+                                    <div class="col">
+                                        <h5 class="card-title text-uppercase text-muted mb-0">Cases</h5>
+                                        <span id="daily_confirmed_label" class="h2 font-weight-bold mb-0">0</span>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="icon icon-shape bg-primary text-white rounded-circle shadow">
+                                            <i class="fas fa-virus"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="mt-3 mb-0 text-muted text-sm">
+                                    <span id="trend_confirmed_label" class="mr-2">+0%</span>
+                                    <span class="text-nowrap">Since last week</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6">
+                        <div class="card shadow card-stats mb-4 mb-xl-0 fade-in-top">
+                            <div class="card-body ">
+                                <div class="row">
+                                    <div class="col">
+                                        <h5 class="card-title text-uppercase text-muted mb-0">Recovered</h5>
+                                        <span id="daily_recovered_label" class="h2 font-weight-bold mb-0">0</span>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="icon icon-shape bg-green text-white rounded-circle shadow">
+                                            <i class="fas fa-heartbeat"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="mt-3 mb-0 text-muted text-sm">
+                                    <span id="trend_recovered_label" class="mr-2">+0%</span>
+                                    <span class="text-nowrap">Since last week</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6">
+                        <div class="card shadow card-stats mb-4 mb-xl-0 fade-in-top">
+                            <div class="card-body ">
+                                <div class="row">
+                                    <div class="col">
+                                        <h5 class="card-title text-uppercase text-muted mb-0">Deaths</h5>
+                                        <span id="daily_deaths_label" class="h2 font-weight-bold mb-0">0</span>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                                            <i class="fa fa-skull-crossbones"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="mt-3 mb-0 text-muted text-sm">
+                                    <span id="trend_deaths_label" class="mr-2">+0%</span>
+                                    <span class="text-nowrap">Since last week</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6">
+                        <div class="card shadow card-stats mb-4 mb-xl-0 fade-in-top">
+                            <div class="card-body ">
+                                <div class="row">
+                                    <div class="col">
+                                        <h5 class="card-title text-uppercase text-muted mb-0">Death Rate</h5>
+                                        <span id="daily_death_rate_label" class="h2 font-weight-bold mb-0">0</span>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
+                                            <i class="fa fa-percent"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="mt-3 mb-0 text-muted text-sm">
+                                    <span id="trend_death_rate_label" class="mr-2">+0</span>
+                                    <span class="text-nowrap">Since last week</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="container mt--7 bg-secondary">
-
         <div class="row mt-3">
             <div class="col-sm-12">
                 <div class="card shadow">
                     <div class="card-header bg-transparent">
                         <div class="row align-items-center">
                             <div class="col">
-                                {#                  <h6 class="text-uppercase text-muted ls-1 mb-1">Global | Sortable</h6>#}
                                 <h2 class="mb-0">Total cases per country</h2>
                             </div>
-                            {#                <div class="col text-right">#}
-                            {#                  <a href="#!" class="btn btn-sm btn-white">#}
-                            {#                    &nbsp;<i class="fas fa-download">&nbsp;</i>#}
-                            {#                  </a>#}
-                            {#                </div>#}
                         </div>
                     </div>
                     <div class="table-responsive">
-                        <!-- cases table -->
                         <table id="cases_table" class="table align-items-center table-flush">
                             <thead class="thead-light">
                             <tr>
                                 <th scope="col">Country</th>
-                                <th scope="col">Confirmed</th>
+                                <th scope="col">Cases</th>
                                 <th scope="col">Recovered</th>
                                 <th scope="col">Deaths</th>
                                 <th scope="col">Death Rate %</th>
@@ -57,35 +172,26 @@
                 </div>
             </div>
         </div>
-
         <div class="row mt-3">
-            <div class="col-sm-12">  <!-- Global interactive Plotly Mabpox -->
+            <div class="col-sm-12">
                 <div class="card shadow fade-in-bottom">
                     <div class="card-body plotly worldmap">
                         <div id="world_map" class="chart" style="height: 100%;"></div>
                     </div>
                     <div style="position: absolute; padding:1.25rem 1.5rem;">
-                        {#                <h6 class="text-uppercase text-muted ls-1 mb-1">Global | Cumulative</h6>#}
                         <h2 class="text-dark mb-0">World Map</h2>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row mt-3">
-            <div class="col-sm-12">  <!-- Growth interactive scatterplot -->
+            <div class="col-sm-12">
                 <div class="card bg-dark shadow fade-in-bottom">
                     <div class="card-header bg-transparent">
                         <div class="row align-items-center">
                             <div class="col">
-                                {#                  <h6 class="text-uppercase text-light ls-1 mb-1">Global | Cumulative</h6>#}
                                 <h2 class="text-white mb-0">Growth of total number of cases</h2>
                             </div>
-                            {#                <div class="col text-right">#}
-                            {#                  <a class="btn btn-sm btn-light" tabindex="0" role="button" data-toggle="popover" data-trigger="focus" title="Info"#}
-                            {#                      data-content="Global cumulative growth in cases since collection of data started. Defaulted to logarithmic y-scale">#}
-                            {#                      &nbsp;<i class="fas fa-info text-dark">&nbsp;</i>#}
-                            {#                    </a>#}
-                            {#                </div>#}
                         </div>
                     </div>
                     <div class="card-body plotly">
@@ -96,49 +202,57 @@
         </div>
 
         <div class="row mt-3">
-            <div class="col-sm-12">   <!-- Global daily growth plot -->
+            <div class="col-sm-12">
                 <div class="card shadow">
                     <div class="card-header bg-transparent">
                         <div class="row align-items-center">
                             <div class="col">
-                                {#            a      <h6 class="text-uppercase text-muted ls-1 mb-1">Global | Daily</h6>#}
                                 <h2 class="mb-0">New COVID-19 cases per day</h2>
                             </div>
-                            {#                <div class="col text-right">#}
-                            {#                  <a class="btn btn-sm btn-white" tabindex="0" role="button" data-toggle="popover" data-trigger="focus" title="Info"#}
-                            {#                      data-content="Daily time series of cases. Bars can be stacked for relative adjacent comparison by toggling 'confirmed' cases.">#}
-                            {#                      &nbsp;<i class="fas fa-info">&nbsp;</i>#}
-                            {#                    </a>#}
-                            {#                </div>#}
                         </div>
                     </div>
-
                     <div class="card-body plotly">
-                        <div id="daily_growth_chart" class="chart"style="height: 310px;"></div>
+                        <div id="daily_growth_chart" class="chart" style="height: 310px;"></div>
                     </div>
                 </div>
             </div>
         </div>
 
-        {% include "includes/footer.html" %}
+        <footer class="footer">
+            <div class="row align-items-center justify-content-xl-between">
+                <div class="col-xl-6">
+                    <div class="text-center text-xl-left ">
+        <span class="font-weight-bold ml-1 text-muted"
+              target="_blank">FH Technikum Wien, Data Ethics & Open Data, Wintersemester 2020
+        </span>
+                    </div>
+                </div>
+            </div>
+        </footer>
 
     </div>
 
-{% endblock content %}
+</div>
 
-<!-- Specific JS goes HERE -->
-{% block javascripts %}
-    <script>
-        $('.nav-item a').removeClass('active');
-        $('.home-item a').addClass('active');
-    </script>
+<script src="/static/assets/js/plugins/jquery/dist/jquery.min.js"></script>
+<script src="/static/assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/static/assets/js/argon-dashboard.min.js?v=1.1.0"></script>
 
-    <!-- Sortable Tables -->
-    <script defer src="/static/assets/js/sorttable.js"></script>
+<script>
+    $('.nav-item a').removeClass('active');
+    $('.home-item a').addClass('active');
+</script>
 
-    <!-- Plotly.js CDN -->
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/1.54.6/plotly.min.js"></script>
+<!-- Sortable Tables -->
+<script defer src="/static/assets/js/sorttable.js"></script>
 
-    <!-- Load and display data -->
-    <script defer src="/static/assets/js/fetch-data.js"></script>
-{% endblock javascripts %}
+<!-- Plotly.js CDN -->
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/1.54.6/plotly.min.js"></script>
+
+<!-- Load and display data -->
+<script defer src="/static/assets/js/fetch-data.js"></script>
+
+</body>
+
+</html>
+

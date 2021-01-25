@@ -9,8 +9,6 @@ def index(request):
 
 def pages(request):
     context = {}
-    # All resource paths end in .html.
-    # Pick out the html file name from the url. And load that template.
     try:
         load_template = request.path.split('/')[-1]
         template = loader.get_template('pages/' + load_template)
